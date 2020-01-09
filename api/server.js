@@ -6,20 +6,6 @@ require('dotenv').config();
 const clientesRoutes = require('./routes/cities');
 const authRoutes = require('./routes/auth');
 
-const mongoose = require('mongoose');
-
-const  mongo_connection  =  'mongodb://mongo:27017'
-const option = {
-     useNewUrlParser: true,
-     useUnifiedTopology: true,
-     useFindAndModify: false
-}
-mongoose.connect(mongo_connection,option).then(function () {
-    console.log("conectou");
-}, function (err) {
-    console.log("Falha ao conectar",err);
-    
-});
 const allowCors = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');

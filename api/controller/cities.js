@@ -7,8 +7,9 @@ Visualizar uma cidade X com o seu clima e filtrar o clima em um range de tempo E
 */
 
 const Cities = require("../city_list.json");
-
-var get_all = async (req, res) => {
+const Weather = require("../weather_list.json");
+const moment = require('moment');
+const get_all = async (req, res) => {
     try {
         return res.status(200).json(Cities);
     } catch (error) {
@@ -17,98 +18,65 @@ var get_all = async (req, res) => {
 
 }
 
-// var buscar_id = async (req, res) => {
-//     try {
+const get_all_weather = async (req, res) => {
+    try {
  
-//         const { id } = req.params;
-//         if(!id) 
-//             return res.status(400).json({
-//                 error: "Invalid data"
-//             });  
-//         const data = await Cliente.findById(id);
-//         if(data.length > 0)
-//             data = data[0];
+        const filteredCities = await Cities.filter(city => {
+            var d = Weather.find(w => w.cityId == city.id);
+            if(d)
+                return d;
+            return false
+        });
+
+        return res.json(filteredCities);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error)
+    }
+
+}
+const get_by_id = async (req, res) => {
+    try {
+ 
+        const { id } = req.params;
+        const { start,end } = req.query;
+        if(!id) 
+            return res.status(400).json({
+                error: "Invalid data"
+            });  
+        const filteredCities = await Cities.find(c => c.id == id);
+        if (Object.entries(filteredCities).length !== 0) {
+            var weather = await Weather.find(w => w.cityId == filteredCities.id);
+
+            if(start && end){
+                console.log(req.query,moment(weather.data[0].dt).format("DD/MM/YYYY"))
+
+                weather = await weather.data.filter(d =>{
+                    return (moment(weather.data[0].dt).isAfter(moment(start,"DD/MM/YYYY")) 
+                            &&
+                            moment(weather.data[0].dt).isBefore(moment(end, "DD/MM/YYYY")))
+                })
+            }
+            if(!weather || weather === undefined || weather.length < 1)
+                return res.json({
+                    error: "The city that you chose does not have weather forecast."
+                });
+            filteredCities.weather = weather.data;
+        }
             
-//         return res.json(data);      
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json(error)
-//     }
-
-// }
-
-// var salvar = async (req, res) => {
-//     try {
-//         if(Object.entries(req.body).length === 0) 
-//             return res.status(400).json({
-//                 error: "Invalid data"
-//             });   
-
-//         const data = await Cliente.create(req.body);
-
-//         enviarEmailConfirmacao(req.body.nome);
-        
-//         return res.status(200).json(data);    
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json(error)
-//     }
-
-// }
-
-// var atualizar = async (req, res) => {
-
-//     try {
-//         const { id } = req.params;
-
-//         if(Object.entries(req.body).length === 0 || !id) 
-//             return res.status(400).json({
-//                 error: "Invalid data"
-//             });  
-        
-//         const { nome,email,cpf,telefone,enderecos} = req.body;
-//         const update = {
-//             $set: {
-//                 nome: nome,
-//                 email: email,
-//                 cpf: cpf,
-//                 telefone: telefone
-//             }
             
-//         }
-//         const data = await Cliente.findByIdAndUpdate(id,update);
-            
-    
-//         return res.status(200).json(data);
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json(error)
-//     }
+        return res.json(filteredCities);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error)
+    }
+
+}
 
 
-// }
 
-// var remover = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         if(!id) 
-//             return res.status(400).json({
-//                 error: "Invalid data"
-//             });  
-//         const data = await Cliente.findByIdAndRemove(id);
-
-//         return res.status(200).json(data);
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json(error)
-//     }
-// }
-
-// module.exports = {
-//     login_usuario,
-//     buscar_todos,
-//     buscar_id,
-//     salvar,
-//     atualizar,
-//     remover
-// }
+module.exports = {
+    get_all,
+    get_all_weather,
+    get_by_id
+}

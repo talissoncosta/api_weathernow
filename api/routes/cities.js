@@ -11,10 +11,8 @@ Visualizar uma cidade X com o seu clima e filtrar o clima em um range de tempo E
 */
 
 router.get('/cities', citiesController.get_all);
-router.get('/cities/weather', citiesController.buscar_id);
-router.post('/cities', citiesController.salvar);
-router.put('/cities/:id', citiesController.atualizar);
-router.delete('/cities/:id', citiesController.remover);
+router.get('/cities/weather', citiesController.get_all_weather);
+router.get('/cities/:id', citiesController.get_by_id);
 
 
 
