@@ -1,0 +1,9 @@
+
+ api_weathernow:  
+  build: .  
+  command: bash -c "yarn install; yarn dev --color=always"  
+  ports:  
+   - "3001:3001"  
+  volumes:  
+   - ./api:/usr/src/api  
+
