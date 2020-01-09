@@ -9,6 +9,7 @@ Visualizar uma cidade X com o seu clima e filtrar o clima em um range de tempo E
 const Cities = require("../city_list.json");
 const Weather = require("../weather_list.json");
 const moment = require('moment');
+
 const get_all = async (req, res) => {
     try {
         return res.status(200).json(Cities);
@@ -40,21 +41,20 @@ const get_by_id = async (req, res) => {
  
         const { id } = req.params;
         const { start,end } = req.query;
-        if(!id) 
+        if(!id){
             return res.status(400).json({
                 error: "Invalid data"
-            });  
+            });
+        } 
+
         const filteredCities = await Cities.find(c => c.id == id);
         if (Object.entries(filteredCities).length !== 0) {
             var weather = await Weather.find(w => w.cityId == filteredCities.id);
 
             if(start && end){
-                console.log(req.query,moment(weather.data[0].dt).format("DD/MM/YYYY"))
-
                 weather = await weather.data.filter(d =>{
-                    return (moment(weather.data[0].dt).isAfter(moment(start,"DD/MM/YYYY")) 
-                            &&
-                            moment(weather.data[0].dt).isBefore(moment(end, "DD/MM/YYYY")))
+                    return (moment(d.dt).isAfter(moment(start,"DD/MM/YYYY")) &&
+                            moment(d.dt).isBefore(moment(end, "DD/MM/YYYY")))
                 })
             }
             if(!weather || weather === undefined || weather.length < 1)
@@ -62,9 +62,7 @@ const get_by_id = async (req, res) => {
                     error: "The city that you chose does not have weather forecast."
                 });
             filteredCities.weather = weather.data;
-        }
-            
-            
+        }          
         return res.json(filteredCities);
     } catch (error) {
         console.log(error);
