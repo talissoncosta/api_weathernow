@@ -23,7 +23,7 @@ if(process.env.NODE_ENV == 'DEV')
 app.use(citiesRoutes);
 
 var PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}`);
 })
 

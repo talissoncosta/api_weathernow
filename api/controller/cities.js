@@ -15,7 +15,6 @@ const get_all = async (req, res) => {
                 return res.status(204).json(filteredCities);
             }
         }
-
         return res.status(200).json(filteredCities);
     } catch (error) {
         return res.status(500).json(error)
@@ -31,7 +30,6 @@ const get_all_weather = async (req, res) => {
         });
         return res.json(citiesWithWeather);
     } catch (error) {
-        console.log(error);
         return res.status(500).json(error)
     }
 
@@ -40,6 +38,7 @@ const get_by_id = async (req, res) => {
     try {
  
         const { id } = req.params;
+        console.log(req.params)
         const { start, end } = req.query;
         if(!id){
             return res.status(400).json({
@@ -51,8 +50,9 @@ const get_by_id = async (req, res) => {
         if(!cityFound){
             return res.status(204).json(cityFound);
         }
+        console.log(cityFound)
         if (Object.entries(cityFound).length !== 0) {
-            var weather = await Weather.find(w => w.cityId == filteredCities.id);
+            var weather = await Weather.find(w => w.cityId == cityFound.id);
 
             if(start && end){
                 weather = await weather.data.filter(d =>{
