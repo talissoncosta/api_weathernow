@@ -39,15 +39,14 @@ describe('CITIES', () => {
         expect(response.body.length).toBe(2);
     });
 
-    it('SHOULD GET THE CITY CASILDA', async () => {
+    it('SHOULD GET THE CITY CAMPECHE', async () => {
         
-        var response = await request(app).get('/cities/3862351')
+        var response = await request(app).get('/cities/3531732')
         .set('Accept', 'application/json');
-        console.log(response)
 
-        var city = response.body[0];
+        var city = response.body;
         
-        expect(city.name).toBe('Casilda');
+        expect(city.name).toBe('Campeche');
     });
 
     it('SHOULD NOT RETURN ANY CITY', async () => {

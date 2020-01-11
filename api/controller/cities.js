@@ -2,6 +2,7 @@
 const Cities = require("../city_list.json");
 const Weather = require("../weather_list.json");
 const moment = require('moment');
+var _ = require('lodash');
 
 const get_all = async (req, res) => {
     try {
@@ -38,7 +39,6 @@ const get_by_id = async (req, res) => {
     try {
  
         const { id } = req.params;
-        console.log(req.params)
         const { start, end } = req.query;
         if(!id){
             return res.status(400).json({
@@ -50,8 +50,7 @@ const get_by_id = async (req, res) => {
         if(!cityFound){
             return res.status(204).json(cityFound);
         }
-        console.log(cityFound)
-        if (Object.entries(cityFound).length !== 0) {
+        if (!_.isEmpty(cityFound)) {
             var weather = await Weather.find(w => w.cityId == cityFound.id);
 
             if(start && end){
