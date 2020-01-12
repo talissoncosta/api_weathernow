@@ -54,9 +54,10 @@ const get_by_id = async (req, res) => {
             var weather = await Weather.find(w => w.cityId == cityFound.id);
 
             if(start && end){
+                console.log(start,end,moment.unix(d.dt))
                 weather = await weather.data.filter(d =>{
-                    return (moment(d.dt).isAfter(moment(start,"YYYY-MM-DD")) &&
-                            moment(d.dt).isBefore(moment(end, "YYYY-MM-DD")))
+                    return (moment.unix(d.dt).isAfter(moment(start,"YYYY-MM-DD")) &&
+                            moment.unix(d.dt).isBefore(moment(end, "YYYY-MM-DD")))
                 })
             }
             if(!weather || weather === undefined || weather.length < 1)

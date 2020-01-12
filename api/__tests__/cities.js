@@ -55,4 +55,14 @@ describe('CITIES', () => {
 
         expect(response.status).toBe(204);
     });
+    it('SHOULD NOT RETURN A CITY WITH ITS FORECAST IN A RANGE', async () => {
+        var response = await request(app).get('/cities/3531732').query({
+            start:'2020/01/01',
+            end:'2020/01/30'
+        })
+        .set('Accept', 'application/json');
+
+        expect(response.status).toBe(204);
+    });
+
 });
