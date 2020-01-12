@@ -2,7 +2,7 @@
 
 ## Documentação
 
-DOCUMENTAÇÃO NO POSTMAN
+DOCUMENTAÇÃO NO POSTMAN <br>
 [https://documenter.getpostman.com/view/442769/SWLiYkmj?version=latest](https://documenter.getpostman.com/view/442769/SWLiYkmj?version=latest) 
 ### Funcionalidades 
  -   Listar todas as cidades
@@ -14,7 +14,7 @@ DOCUMENTAÇÃO NO POSTMAN
 #### Listar todas as cidades 
 * **URL**
 
-  <_http://localhost:3001/cities_>
+  `http://localhost:3001/cities`
 
 * **Method:**
   `GET`
@@ -28,7 +28,7 @@ DOCUMENTAÇÃO NO POSTMAN
 #### Listar cidade correspondente a LATITUDE e LONGITUDE filtradas
 * **URL**
 
-  <_http://localhost:3001/cities?lat=<_LATITUDE_>&lon=<_LONGITUDE_>_>
+  `http://localhost:3001/cities?lat=<LATITUDE>&lon=<LONGITUDE> `
 
 * **Method:**
   `GET`
@@ -50,7 +50,7 @@ DOCUMENTAÇÃO NO POSTMAN
 #### Buscar cidades que possuem informações sobre o clima
 * **URL**
 
-  <_http://localhost:3001/cities/weather>
+  `<http://localhost:3001/cities/weather>`
 
 * **Method:**
   `GET`
@@ -66,7 +66,7 @@ DOCUMENTAÇÃO NO POSTMAN
 #### Buscar por ID cidade que possuem informações sobre o clima 
 * **URL**
 
-  <http://localhost:3001/cities/<_id_>>
+  `http://localhost:3001/cities/<id>`
 
 * **Method:**
   `GET`
@@ -86,7 +86,7 @@ DOCUMENTAÇÃO NO POSTMAN
 #### Buscar por ID cidade que possuem informações sobre o clima filtrando resultados do clima por data (YYYY-MM-DD)
 * **URL**
 
-  <http://localhost:3001/cities/<_id_>>
+  `http://localhost:3001/cities/<id>`
 
 * **Method:**
   `GET`
