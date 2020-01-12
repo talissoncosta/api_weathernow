@@ -57,12 +57,20 @@ describe('CITIES', () => {
     });
     it('SHOULD NOT RETURN A CITY WITH ITS FORECAST IN A RANGE', async () => {
         var response = await request(app).get('/cities/3531732').query({
-            start:'2020/01/01',
-            end:'2020/01/30'
+            start:'2020-01-01',
+            end:'2020-01-30'
         })
         .set('Accept', 'application/json');
 
-        expect(response.status).toBe(204);
+        expect(response.body.error).toBe("The city that you chose does not have weather forecast.");
     });
+    it('SHOULD RETURN A CITY WITH ITS FORECAST IN A RANGE', async () => {
+        var response = await request(app).get('/cities/3531732').query({
+            start:'2017-01-01',
+            end:'2017-12-30'
+        })
+        .set('Accept', 'application/json');
 
+        expect(response.body.weather.length).toBeGreaterThan(0);
+    });
 });

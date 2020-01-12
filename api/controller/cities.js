@@ -52,19 +52,22 @@ const get_by_id = async (req, res) => {
         }
         if (!_.isEmpty(cityFound)) {
             var weather = await Weather.find(w => w.cityId == cityFound.id);
-
+            
+            cityFound.weather = weather.data;
+            
             if(start && end){
-                console.log(start,end,moment.unix(d.dt))
-                weather = await weather.data.filter(d =>{
+
+                weather = await weather.data.filter(d => {
                     return (moment.unix(d.dt).isAfter(moment(start,"YYYY-MM-DD")) &&
                             moment.unix(d.dt).isBefore(moment(end, "YYYY-MM-DD")))
                 })
+                cityFound.weather = weather
             }
-            if(!weather || weather === undefined || weather.length < 1)
+            if(!weather || weather === undefined || weather.length < 1){
                 return res.json({
                     error: "The city that you chose does not have weather forecast."
                 });
-                cityFound.weather = weather.data;
+            }
         }          
         return res.json(cityFound);
     } catch (error) {
