@@ -1,7 +1,17 @@
 # API WEATHER NOW
 
+
+
+
 ## Documentação
 
+### Para rodar a aplicação
++ Entre no diretório raiz da aplicação e execute o comando
+	`docker-compose up`
+	Após alguns segundos a aplicação vai estar disponível pelo endereço:
+	`http://localhost:3001`
+
+	
 DOCUMENTAÇÃO NO POSTMAN <br>
 [https://documenter.getpostman.com/view/442769/SWLiYkmj?version=latest](https://documenter.getpostman.com/view/442769/SWLiYkmj?version=latest) 
 ### Funcionalidades 
